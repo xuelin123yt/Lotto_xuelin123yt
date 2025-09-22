@@ -5,7 +5,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import tw.edu.pu.csim.tcyang.lotto.ui.theme.LottoTheme
@@ -50,8 +51,12 @@ fun Play(modifier: Modifier = Modifier) {
 
     Column (modifier = modifier
         .fillMaxSize()
-        .clickable {
-            Toast.makeText(context, "螢幕觸控(王奕翔)", Toast.LENGTH_SHORT).show()
+        .pointerInput(Unit) {
+            detectTapGestures { offset ->
+                val x = offset.x.toInt()
+                val y = offset.y.toInt()
+                Toast.makeText(context, "螢幕觸控(王奕翔) - X: $x, Y: $y", Toast.LENGTH_SHORT).show()
+            }
         },
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
